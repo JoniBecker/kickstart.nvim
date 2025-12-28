@@ -634,6 +634,7 @@ require('lazy').setup({
         },
         gopls = {},
         ts_ls = {},
+        elmls = {},
         lua_ls = {
           on_init = function(client)
             client.server_capabilities.documentFormattingProvider = false -- Disable formatting (formatting is done by stylua)
