@@ -704,6 +704,7 @@ require('lazy').setup({
         },
         gopls = {},
         ts_ls = {},
+        elmls = {},
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
