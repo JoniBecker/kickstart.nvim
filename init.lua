@@ -576,11 +576,14 @@ require('lazy').setup({
           ---@param bufnr? integer some lsp support methods only in specific files
           ---@return boolean
           local function client_supports_method(client, method, bufnr)
-            if vim.fn.has 'nvim-0.11' == 1 then
-              return client:supports_method(method, bufnr)
-            else
-              return client.supports_method(method, { bufnr = bufnr })
-            end
+            -- JONI COMMENT
+            -- We are using neovim with version > 0.11, so we can ignore the else case here. I will leave it commented out below, though
+            return client:supports_method(method, bufnr)
+            -- if vim.fn.has 'nvim-0.11' == 1 then
+            --   return client:supports_method(method, bufnr)
+            -- else
+            --   return client.supports_method(method, { bufnr = bufnr })
+            -- end
           end
 
           -- The following two autocommands are used to highlight references of the
@@ -614,13 +617,13 @@ require('lazy').setup({
 
           -- TODO Put this somewhere reasonable
           -- ALso this is Joni garbage code
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_codeLens) then
+          if client and client.supports_method(client, vim.lsp.protocol.Methods.textDocument_codeLens, event.buf) then
             vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave' }, {
               callback = function()
                 vim.lsp.codelens.refresh()
               end,
             })
-            vim.keymap.set('n', '<leader>cl', vim.lsp.codelens.run, { desc = 'Run CodeLens actions' })
+            vim.keymap.set('n', '<leader>cl', vim.lsp.codelens.run, { desc = 'Run [C]ode[L]ens actions' })
           end
 
           -- The following code creates a keymap to toggle inlay hints in your
