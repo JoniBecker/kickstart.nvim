@@ -567,22 +567,6 @@ require('lazy').setup({
           --  the definition of its *type*, not where it was *defined*.
           map('grt', require('telescope.builtin').lsp_type_definitions, '[G]oto [T]ype Definition')
 
-          -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
-          ---@param client vim.lsp.Client
-          ---@param method vim.lsp.protocol.Method
-          ---@param bufnr? integer some lsp support methods only in specific files
-          ---@return boolean
-          local function client_supports_method(client, method, bufnr)
-            -- JONI COMMENT
-            -- We are using neovim with version > 0.11, so we can ignore the else case here. I will leave it commented out below, though
-            return client:supports_method(method, bufnr)
-            -- if vim.fn.has 'nvim-0.11' == 1 then
-            --   return client:supports_method(method, bufnr)
-            -- else
-            --   return client.supports_method(method, { bufnr = bufnr })
-            -- end
-          end
-
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
           --    See `:help CursorHold` for information about when this is executed
@@ -617,7 +601,7 @@ require('lazy').setup({
           if client and client.supports_method(client, vim.lsp.protocol.Methods.textDocument_codeLens, event.buf) then
             vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave' }, {
               callback = function()
-                vim.lsp.codelens.refresh()
+                vim.lsp.codelens.enable(true)
               end,
             })
             map('grl', vim.lsp.codelens.run, 'Run Code[L]ens', { 'n', 'x' })
