@@ -620,7 +620,7 @@ require('lazy').setup({
                 vim.lsp.codelens.refresh()
               end,
             })
-            vim.keymap.set('n', '<leader>cl', vim.lsp.codelens.run, { desc = 'Run [C]ode[L]ens actions' })
+            map('grl', vim.lsp.codelens.run, 'Run Code[L]ens', { 'n', 'x' })
           end
 
           -- The following code creates a keymap to toggle inlay hints in your
@@ -930,7 +930,15 @@ require('lazy').setup({
       --  Check out: https://github.com/nvim-mini/mini.nvim
     end,
   },
-
+  {
+    'lervag/vimtex',
+    lazy = false, -- we don't want to lazy load VimTeX
+    -- tag = "v2.15", -- uncomment to pin to a specific release
+    init = function()
+      -- VimTeX configuration goes here, e.g.
+      vim.g.vimtex_view_method = 'zathura'
+    end,
+  },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     lazy = false,
