@@ -642,6 +642,11 @@ require('lazy').setup({
           settings = {
             haskell = {
               formattingProvider = 'fourmolu',
+              plugin = {
+                semanticTokens = {
+                globalOn = true,
+                }
+              },
             },
           },
         },
